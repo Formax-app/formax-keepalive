@@ -1,0 +1,21 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "formax-keepalive",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-14",
+
+  // Cron Events and console output in the dashboard. Without it a failing ping is invisible
+  // unless someone happens to be running `wrangler tail`.
+  "observability": { "enabled": true },
+
+  // Durable, readable proof that the cron is firing. `wrangler tail` only shows logs while you
+  // are watching, and the dashboard's Cron Events window is short — so the Worker records each
+  // ping here and its public URL reads it back. 144 writes a day against a 1,000/day free limit.
+  "kv_namespaces": [{ "binding": "STATE", "id": "97c5ebcbc63a44538bff86c19225d1ef" }],
+
+  // Every 10 minutes, against Render's 15-minute sleep window. Unlike GitHub's scheduler this
+  // is honoured; Cloudflare notes only that a config change takes up to 15 minutes to propagate.
+  "triggers": {
+    "crons": ["*/10 * * * *"]
+  }
+}

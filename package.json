@@ -1,0 +1,14 @@
+{
+  "name": "formax-keepalive",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pings the Formax backend on Render so it never spins down.",
+  "scripts": {
+    "dev": "wrangler dev --test-scheduled",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail"
+  },
+  "devDependencies": {
+    "wrangler": "^4.131.2"
+  }
+}
